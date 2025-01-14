@@ -21,7 +21,7 @@ This repository contains the dockerized version of the Flarie TODO application w
    ```bash
    kubectl apply -f k8s/
  
-# CI/CD Pipeline
+## CI/CD Pipeline
     The CI/CD pipeline is set up using GitHub Actions.
     It triggers on every push or pull_request to the main branch.
     The pipeline:
@@ -29,11 +29,11 @@ This repository contains the dockerized version of the Flarie TODO application w
        -> Pushes the image to Docker Hub.
 
 # Links
-## GitHub Repository: Flarie TODO Fork
-## Docker Hub Image: lutfar1996/flarie-todo       
+ GitHub Repository: Flarie TODO Fork
+ Docker Hub Image: lutfar1996/flarie-todo       
  
-# Kubernetes Manifests
-## The k8s/ directory contains the following manifests:
+## Kubernetes Manifests
+  The k8s/ directory contains the following manifests:
 
-### deployment.yaml - Defines the Deployment for the application.
-### service.yaml - Exposes the application as a NodePort service on port 34567. 
+  deployment.yaml - Defines the Deployment for the application.
+  service.yaml - Exposes the application as a NodePort service on port 34567. 
