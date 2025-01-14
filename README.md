@@ -29,11 +29,11 @@ This repository contains the dockerized version of the Flarie TODO application w
        -> Pushes the image to Docker Hub.
 
 ## Links
- -> GitHub Repository: [Flarie TODO Fork](https://github.com/Lutfar1996/flarie-todo.git)
+ -> GitHub Repository: [Flarie TODO Fork](https://github.com/Lutfar1996/flarie-todo.git)<br/>
  -> Docker Hub Image: [lutfar1996/flarie-todo](https://hub.docker.com/repository/docker/lutfar1996/flarie-todo)       
  
 ## Kubernetes Manifests
   The k8s/ directory contains the following manifests:
 
-   -> deployment.yaml - Defines the Deployment for the application.
+   -> deployment.yaml - Defines the Deployment for the application.<br/>
    -> service.yaml - Exposes the application as a NodePort service on port 34567. 
