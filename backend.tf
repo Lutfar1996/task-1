@@ -4,7 +4,7 @@ terraform {
     key            = "terraform/state/terraform.tfstate"  # Path where the state file will be stored
     # region         = "nyc3"  # DigitalOcean Spaces region (NYC3)
     region         =  "ap-southeast-1"
-    endpoint       = "https://nyc3.digitaloceanspaces.com"  # Endpoint for DigitalOcean Spaces API
+    endpoint       = "nyc3.digitaloceanspaces.com"  # Endpoint for DigitalOcean Spaces API
    acl            = "private"  # Set to private for security
   }
 }
