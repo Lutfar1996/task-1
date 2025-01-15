@@ -1,12 +1,9 @@
 terraform {
   backend "s3" {
-    bucket         = "flarie"  # The name of your DigitalOcean Spaces bucket
-    key            = "terraform.tfstate"  # Path where the state file will be stored
-    # region         = "nyc3"  # DigitalOcean Spaces region (NYC3)
-    region         =  "ap-southeast-1"
-     endpoints {
-      s3 = "https://nyc3.digitaloceanspaces.com"
-    }# Endpoint for DigitalOcean Spaces API
-   acl            = "private"  # Set to private for security
+    bucket         = "flarie"
+    key            = "terraform/state/terraform.tfstate"
+    region         = "nyc3"
+    acl            = "private"
+    endpoint       = "https://nyc3.digitaloceanspaces.com"
   }
 }
