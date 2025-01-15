@@ -4,8 +4,6 @@ terraform {
     key            = "terraform/state/terraform.tfstate"
     region         = "ap-south-1"
     acl            = "private"
-    endpoints {
-      s3 = "https://nyc3.digitaloceanspaces.com"
-    }
+    endpoint       = "https://nyc3.digitaloceanspaces.com"
   }
 }
