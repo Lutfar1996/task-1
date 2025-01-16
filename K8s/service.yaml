@@ -5,8 +5,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - port: 34567
-      targetPort: 34567
-      nodePort: 34567
+    - port: 32767
+      targetPort: 32767
+      nodePort: 32767
   selector:
     app: flarie-todo

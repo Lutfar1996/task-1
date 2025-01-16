@@ -18,16 +18,16 @@ spec:
         - name: flarie-todo
           image: lutfar1996/flarie-todo:latest
           ports:
-            - containerPort: 34567
+            - containerPort: 32767
           livenessProbe:
             httpGet:
               path: /
-              port: 34567
+              port: 32767
             initialDelaySeconds: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /
-              port: 34567
+              port: 32767
             initialDelaySeconds: 5
             periodSeconds: 10
