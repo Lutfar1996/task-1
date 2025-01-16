@@ -29,4 +29,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/flarie-todo:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/flarie-todo:${{ github.run_number }}
