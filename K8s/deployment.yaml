@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flarie-todo
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: flarie-todo
@@ -16,18 +16,18 @@ spec:
     spec:
       containers:
         - name: flarie-todo
-          image: lutfar1996/flarie-todo:19
+          image: lutfar1996/flarie-todo:21
           ports:
-            - containerPort: 32767
+            - containerPort: 3000
           livenessProbe:
             httpGet:
-              path: /
-              port: 32767
-            initialDelaySeconds: 5
-            periodSeconds: 10
+              path: /items
+              port: 3000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
-              path: /
-              port: 32767
-            initialDelaySeconds: 5
-            periodSeconds: 10
+              path: /items
+              port: 3000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
