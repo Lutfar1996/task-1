@@ -1,17 +1,23 @@
+# Use the Node.js 16 image as the base image
 FROM node:16
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+# Copy only package.json and yarn.lock first (for caching dependencies)
+COPY package.json yarn.lock ./
 
-# Copy the rest of the application files
+# Install dependencies using Yarn
+RUN yarn install
+
+# Copy all application files into the container
 COPY . .
 
-# Expose the application port
+# Set the working directory inside the container to /app/src
+WORKDIR /app/src
+
+# Expose the port the application runs on
 EXPOSE 32767
 
-# Command to run the app
+# Run the application
 CMD ["node", "index.js"]
