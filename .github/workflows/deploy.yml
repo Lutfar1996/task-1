@@ -42,3 +42,15 @@ jobs:
           kubectl apply -f K8s/service.yaml
         env:
           KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Deployment Status
+        run: |
+          kubectl rollout status deployment/flarie-todo-deployment --timeout=7m
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Pods Status
+        run: |
+          kubectl get pods --selector=app=flarie-todo -o wide
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
