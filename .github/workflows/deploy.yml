@@ -25,7 +25,7 @@ jobs:
         run: doctl auth init --access-token ${{ secrets.DO_API_TOKEN }}
 
       - name: Save kubeconfig in workspace
-        run: doctl kubernetes cluster kubeconfig save <your-cluster-name> --set-current-context=false
+        run: doctl kubernetes cluster kubeconfig save flarie --set-current-context=false
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3

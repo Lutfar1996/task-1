@@ -3,10 +3,10 @@ name: CI Pipeline
 on:
   push:
     branches:
-      - main
+      - pipeline
   pull_request:
     branches:
-      - main
+      - pipeline
 
 jobs:
   build-and-push:
@@ -29,4 +29,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/flarie-todo:${{ github.run_number }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/flarie-todo-1:${{ github.run_number }}
