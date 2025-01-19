@@ -1,17 +1,16 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - pipeline
+      - main
   pull_request:
     branches:
-      - pipeline
+      - main
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -30,3 +29,52 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/flarie-todo-1:${{ github.run_number }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push  # This ensures that deploy will run only after the build-and-push job succeeds
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.99.0/doctl-1.99.0-linux-amd64.tar.gz | tar -xzv
+          sudo mv doctl /usr/local/bin
+
+      - name: Authenticate with DigitalOcean
+        run: doctl auth init --access-token ${{ secrets.DOS_API_TOKEN }}
+
+      - name: Save kubeconfig from GitHub Secret
+        run: echo "${{ secrets.KUBE_CONFIG }}" > ${{ github.workspace }}/kubeconfig
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Cluster Context
+        run: kubectl config current-context
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: v1.26.0
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f K8s/deployment.yaml
+          kubectl apply -f K8s/service.yaml
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Deployment Status
+        run: |
+          kubectl rollout status deployment/flarie-todo-deployment --timeout=7m
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Pods Status
+        run: |
+          kubectl get pods --selector=app=flarie-todo -o wide
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
