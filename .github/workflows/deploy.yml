@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      KUBECONFIG: ${{ github.workspace }}/kubeconfig
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -24,8 +21,15 @@ jobs:
       - name: Authenticate with DigitalOcean
         run: doctl auth init --access-token ${{ secrets.DOS_API_TOKEN }}
 
-      - name: Save kubeconfig in workspace
-        run: doctl kubernetes cluster kubeconfig save flarie --set-current-context=false
+      - name: Save kubeconfig from GitHub Secret
+        run: echo "${{ secrets.KUBE_CONFIG }}" > ${{ github.workspace }}/kubeconfig
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+      - name: Check Cluster Context
+        run: kubectl config current-context
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
@@ -36,3 +40,5 @@ jobs:
         run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+        env:
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig
