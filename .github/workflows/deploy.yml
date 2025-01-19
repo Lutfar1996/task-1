@@ -22,7 +22,7 @@ jobs:
           sudo mv doctl /usr/local/bin
 
       - name: Authenticate with DigitalOcean
-        run: doctl auth init --access-token ${{ secrets.DO_API_TOKEN }}
+        run: doctl auth init --access-token ${{ secrets.DOS_API_TOKEN }}
 
       - name: Save kubeconfig in workspace
         run: doctl kubernetes cluster kubeconfig save flarie --set-current-context=false
