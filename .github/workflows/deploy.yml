@@ -1,0 +1,38 @@
+name: Deploy to DigitalOcean Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      KUBECONFIG: ${{ github.workspace }}/kubeconfig
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.99.0/doctl-1.99.0-linux-amd64.tar.gz | tar -xzv
+          sudo mv doctl /usr/local/bin
+
+      - name: Authenticate with DigitalOcean
+        run: doctl auth init --access-token ${{ secrets.DO_API_TOKEN }}
+
+      - name: Save kubeconfig in workspace
+        run: doctl kubernetes cluster kubeconfig save <your-cluster-name> --set-current-context=false
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: v1.26.0
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/deployment.yaml
+          kubectl apply -f k8s/service.yaml

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: flarie-todo
-          image: lutfar1996/flarie-todo:21
+          image: lutfar1996/flarie-todo:22
           ports:
             - containerPort: 3000
           livenessProbe:
